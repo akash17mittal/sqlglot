@@ -506,6 +506,7 @@ class Generator:
             self.sql(expression, "order"),
             self.sql(expression, "limit"),
             self.sql(expression, "offset"),
+            self.sql(expression, "semantic"),
             sep="",
         )
 
@@ -741,6 +742,9 @@ class Generator:
 
     def sub_sql(self, expression):
         return self.binary(expression, "-")
+
+    def semantic_sql(self, expression):
+        return f"{self.seg('SEMANTIC')} {self.sql(expression, 'this')}"
 
     def trycast_sql(self, expression):
         return (

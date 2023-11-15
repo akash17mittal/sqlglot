@@ -83,6 +83,10 @@ class TestParser(unittest.TestCase):
             "SELECT ROW() OVER(PARTITION BY x) FROM x GROUP BY y",
         )
 
+    def test_semantic(self):
+        expression = parse_one("Select a from b SEMANTIC 'car is red'")
+        assert expression.args["semantic"].args["this"].args["this"] == 'car is red'
+
     def test_missing_by(self):
         with self.assertRaises(ParseError):
             parse_one("SELECT FROM x GROUP BY")

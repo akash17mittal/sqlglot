@@ -686,6 +686,7 @@ class Parser:
                     "order": self._parse_order(),
                     "limit": self._parse_limit(),
                     "offset": self._parse_offset(),
+                    "semantic": self._parse_semantic()
                 },
             )
 
@@ -923,6 +924,11 @@ class Parser:
         if not self._match(TokenType.LIMIT):
             return None
         return self.expression(exp.Limit, this=self._parse_number())
+
+    def _parse_semantic(self):
+        if not self._match(TokenType.SEMANTIC):
+            return None
+        return self.expression(exp.Semantic, this=self._parse_string())
 
     def _parse_offset(self):
         if not self._match(TokenType.OFFSET):

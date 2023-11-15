@@ -179,6 +179,7 @@ class TokenType(AutoName):
     WITH = auto()
     WITHOUT = auto()
     ZONE = auto()
+    SEMANTIC = auto()
 
 
 class Token:
@@ -408,6 +409,7 @@ class Tokenizer:
         "TIMESTAMPTZ": TokenType.TIMESTAMPTZ,
         "DATE": TokenType.DATE,
         "UUID": TokenType.UUID,
+        "SEMANTIC": TokenType.SEMANTIC
     }
 
     WHITE_SPACE = {

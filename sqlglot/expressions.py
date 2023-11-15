@@ -419,6 +419,8 @@ class Lateral(Expression):
 class Offset(Expression):
     pass
 
+class Semantic(Expression):
+    pass
 
 class Order(Expression):
     arg_types = {"expressions": True}
@@ -483,6 +485,7 @@ class Select(Expression):
         "order": False,
         "limit": False,
         "offset": False,
+        "semantic": False
     }
 
 
