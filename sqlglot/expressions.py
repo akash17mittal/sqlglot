@@ -210,8 +210,6 @@ class Expression:
         node = self.copy() if copy else self
         new_node = fun(node, *args, **kwargs)
 
-        if new_node is None:
-            raise ValueError("A transformed node cannot be None")
         if not isinstance(new_node, Expression) or new_node is not node:
             return new_node
 
@@ -223,13 +221,21 @@ class Expression:
 
             for cn in child_nodes:
                 if isinstance(cn, Expression):
-                    new_child_node = cn.transform(fun, *args, copy=False, **kwargs)
-                    new_child_node.parent = new_node
+                    new_child_node = cn.transform(
+                        fun, *args, copy=False, **kwargs)
+                    if new_child_node is not None:
+                        new_child_node.parent = new_node
                 else:
                     new_child_node = cn
                 new_child_nodes.append(new_child_node)
 
-            new_node.args[k] = new_child_nodes if is_list_arg else new_child_nodes[0]
+            if is_list_arg:
+                new_node.args[k] = new_child_nodes
+            else:
+                if len(new_child_nodes) > 0:
+                    new_node.args[k] = new_child_nodes[0]
+                # Else do nothing
+
         return new_node
 
 
